@@ -1,0 +1,6 @@
+assets/_originals/
+.claude/
+_site/
+.env
+.env.*
+node_modules/
