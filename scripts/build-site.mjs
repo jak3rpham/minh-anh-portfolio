@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { readFile, writeFile, mkdir, cp, access } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
@@ -25,6 +26,11 @@ const escapeAttr = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quo
 html = html.replace(/<link rel="canonical"[^>]*>/, `<link rel="canonical" href="${escapeAttr(base.href)}">`);
 html = html.replace(/<meta property="og:image"[^>]*>/,
   `<meta property="og:url" content="${escapeAttr(base.href)}">\n<meta property="og:image" content="${escapeAttr(new URL('assets/img/portrait-hero.webp', base).href)}">`);
+// Content hashes prevent stale CSS/JS after a Pages deployment.
+for (const asset of new Set(assets.filter(path => /\.(css|js)$/.test(path)))) {
+  const hash = createHash('sha256').update(await readFile(resolve(root, asset))).digest('hex').slice(0, 12);
+  html = html.replaceAll('"' + asset + '"', '"' + asset + '?v=' + hash + '"');
+}
 await mkdir(output, { recursive: true });
 await writeFile(resolve(output, 'index.html'), html);
 await writeFile(resolve(output, '.nojekyll'), '');
