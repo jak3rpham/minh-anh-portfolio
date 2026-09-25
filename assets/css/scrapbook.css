@@ -180,3 +180,28 @@ h1,h2,h3 { font-weight: 600; letter-spacing: -.055em; }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* The butter sticker overlaps the polaroid's bottom-left corner, which was
+   cutting the centred caption in half. Set the caption clear of it instead. */
+.hero__figure figcaption { text-align: right; padding-right: 10px; }
+@media (min-width: 901px) {
+  .collage-sticker { left: -1.4rem; }
+}
+/* On narrow screens there is no room beside the polaroid, so the sticker drops
+   below it and centres instead of sitting across the caption. */
+@media (max-width: 900px) {
+  .hero__collage { padding-bottom: 2.25rem; }
+  .collage-sticker {
+    position: static;
+    display: table;
+    margin: 1.4rem auto 0;
+    bottom: auto;
+    left: auto;
+    transform: rotate(-6deg);
+    font-size: .82rem;
+  }
+}
+
+/* Close portrait crop, keeping the face and shoulders inside the Polaroid. */
+.hero__portrait-crop { display: block; overflow: hidden; aspect-ratio: 4 / 4.65; position: relative; }
+.hero__portrait-crop img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; transform: scale(1.85); transform-origin: 66% 33%; }

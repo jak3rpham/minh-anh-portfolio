@@ -25,7 +25,36 @@ personal photos. Keep real campaign content and readable recruiter navigation.
   images; no missing anchor targets or duplicate IDs. JS syntax check passed.
 - External published-post destinations were preserved, not independently checked.
 
+## Follow-up session (same day)
+Fixed: the butter sticker in the hero collage covered 44% of the polaroid caption
+"Minh Anh, in her element." on desktop and 65% on mobile.
+- Desktop (>=901px): caption right-aligned, sticker shifted to `left: -1.4rem`.
+- Mobile (<=900px): sticker moved out of absolute positioning into normal flow,
+  centred below the polaroid, so overlap is impossible at any narrow width.
+Measured caption coverage after the fix: 0% at 320, 375 and 1440.
+
+Re-verified by measuring the live DOM (not screenshots):
+- No horizontal overflow at 320, 375, 390, 400, 430, 768, 1440.
+- Nav stays on one line, 68px; every link and the theme toggle on screen at 320+.
+- All 37 images report naturalWidth > 0. The 7 client logos sit on one row at 1440.
+- Lightbox: opens, paginates 1..n, shows the right published-post link, Escape
+  closes it, focus returns to the card, body scroll lock released.
+- Zero em-dashes in rendered text.
+
+Note on tooling: headless Chrome screenshots of this page are misleading. Images
+decode after the virtual-time budget, so photos appear as blank polaroid frames
+even though they load correctly in a real browser. Verify with DOM measurement.
+
 ## Preview
 Current session serves the site at http://127.0.0.1:4174 using a temporary Node
 static server. No deployment performed. Existing Claude launch config uses 4173
 and Python; do not assume Python is installed on this machine.
+
+## Full showcase and portrait crop — 2026-09-25
+- User requested preserving the Canva original's full showcase and distinct section colors.
+- Work now displays all 42 slides inline across 7 brand sections, grouped by content type; published-post links are visible beside captions.
+- Added assets/css/showcase.css. Each brand has its own palette, with one-column mobile layout and project jump links.
+- Clicking a slide opens that exact slide in the existing gallery; verified YSL 5/9 and Shu 4/4.
+- Hero now uses a CSS crop focused on face and shoulders (original asset unchanged), visually checked on desktop and 375px mobile.
+- Preserved existing caption/sticker overlap fix in scrapbook.css.
+- Local build and JS syntax passed; 42 slides appear once each with intrinsic dimensions; mobile has no horizontal overflow.

@@ -107,7 +107,8 @@
   function open(key, trigger) {
     current = projects[key];
     if (!current) return;
-    index = 0;
+    var requested = trigger ? Number(trigger.getAttribute("data-slide")) : 0;
+    index = Number.isInteger(requested) && requested >= 0 && requested < current.slides.length ? requested : 0;
     opener = trigger || null;
     elTitle.textContent = current.title;
     elSub.textContent = current.sub;
