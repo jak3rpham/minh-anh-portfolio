@@ -58,3 +58,9 @@ and Python; do not assume Python is installed on this machine.
 - Hero now uses a CSS crop focused on face and shoulders (original asset unchanged), visually checked on desktop and 375px mobile.
 - Preserved existing caption/sticker overlap fix in scrapbook.css.
 - Local build and JS syntax passed; 42 slides appear once each with intrinsic dimensions; mobile has no horizontal overflow.
+
+## Compact campaign boards — 2026-09-25
+- Shifted hero crop origin horizontally from 66% to 87%, centering the subject visually.
+- Reworked desktop projects as compact boards: brand-specific group column spans, contained image previews, reduced heading/section spacing.
+- All 42 slides remain visible; mobile uses two-column previews with full-size lightbox.
+- Desktop review at 1280px showed project heights between 530 and 866px. Mobile 375px had no horizontal overflow; selected-slide lightbox verified.
