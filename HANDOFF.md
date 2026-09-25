@@ -64,3 +64,56 @@ and Python; do not assume Python is installed on this machine.
 - Reworked desktop projects as compact boards: brand-specific group column spans, contained image previews, reduced heading/section spacing.
 - All 42 slides remain visible; mobile uses two-column previews with full-size lightbox.
 - Desktop review at 1280px showed project heights between 530 and 866px. Mobile 375px had no horizontal overflow; selected-slide lightbox verified.
+
+## Free-form brand spreads — 2026-09-25 (Claude)
+User feedback: the campaign boards felt rigid; wanted the free layout of the Canva
+original, with each brand's logo inside its own section.
+- The 7 `.project` sections are replaced by `.spread` boards (assets/css/spreads.css).
+  Each board is rebuilt from the Canva page geometry: every slide keeps its original
+  position, size, crop and stacking order on a 1366 x 768 board, written inline as
+  `--x/--y/--w` (percent), `--ar` (aspect), `--z` (layer), `--r` (tilt), `--op` (crop).
+  To move a piece, edit those values in index.html.
+- Brand logo is the section heading (`h3.spread__logo`), placed and cropped as in Canva.
+- Captions and the 11 published-post links sit next to their slide groups, as in Canva.
+- One deliberate deviation: the Bup Non title overlapped its bleeding logo in Canva and
+  was unreadable, so it moved into open space above the content direction pieces.
+- DOM order is the reading order. At <=760px the board becomes a loose stack: logo,
+  captions, slides at 84% width alternating left/right with slight overlap and tilt.
+- Shu uemura background changed from dark to light stone so its black logo is visible.
+- Clients: uniform logo row replaced by the scattered cluster from the Canva page;
+  each logo links to its brand spread.
+- Experience toolrow: added the unidentified pink mark (alt "AI content tool"), as the
+  user asked. Its baked-in fake transparency checkerboard was removed.
+- showcase.css now holds only the work intro and project index; dead .project rules removed.
+
+Verified with headless Chrome over CDP (waits for every image to decode, see note above):
+- No horizontal overflow at 320, 375, 390, 768, 820, 1024, 1280, 1440, 1920.
+- Clicking Eugica slide 4 opens the lightbox at 4 of 5 with its post link; Escape closes.
+- No console errors. `node scripts/build-site.mjs` validates 7 projects, 42 slides.
+- Visually reviewed all 7 spreads + clients at 1440, three spreads at 390, two at 820.
+
+## "Marketer's desk" pass — 2026-09-25 (Claude)
+User approved the "marketer's desk" direction: freer and more creative, not a 1:1 Canva copy.
+- Type: headings now Bricolage Grotesque, handwritten notes Patrick Hand (both self-hosted,
+  Vietnamese subsets, appended to fonts.css). `--font-display` / `--font-hand` set in desk.css;
+  every Segoe Print/Comic Sans stack in scrapbook.css now uses `var(--font-hand)`.
+- Spreads (spreads.css): dotted board surface, torn-paper top edge on each spread, outlined
+  project numbers 01-07, masking tape on every other slide, hand-drawn arrows (`#i-doodle-arrow`
+  in the sprite) pointing from each post link and from "We won this pitch!" to their slide.
+  Note boxes are clamped inside the board so nothing clips at tablet widths.
+- Logos: La Roche-Posay and Eugica re-cut from originals with transparent backgrounds.
+  Bup Non uses `logo-bupnon-emblem.webp` (emblem cut out of its lime square) filling a
+  full-height lime band. User asked for no white outline on logos: soft shadow only.
+- Clients (desk.css): kraft board, tilted logos, taped Palmolive/GazGo, handwritten
+  "I've worked with" and "and more."; two-column sticker sheet under 600px.
+- Contact: portrait re-cropped onto Minh Anh; section is now a taped polaroid plus a
+  postcard (stamp, "Ho Chi Minh City 2026" postmark, ruled lines for email/phone/LinkedIn).
+  Postcard colours are fixed so it stays paper in dark mode.
+- Verified: no overflow 320-1920, notes never clip, lightbox + link, no console errors,
+  build passes; desktop spreads/clients/contact and mobile hero/spreads/clients/contact reviewed.
+- Follow-up: user saw white boxes behind the La Roche-Posay/Eugica logos. The files were
+  already transparent; the browser was showing the cached old image with the same name.
+  build-site.mjs now appends content hashes to images (webp/png/jpg/svg) as well as CSS/JS,
+  so replaced images can't go stale after a Pages deploy. Fonts are not hashed (CSS loads them).
+- Toolkit marks (Canva, CapCut, unnamed AI mark) enlarged to 52-64px, tilted, soft shadow;
+  Canva re-cut with a transparent background (border flood fill keeps its white wordmark).

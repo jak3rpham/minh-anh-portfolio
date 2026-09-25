@@ -26,8 +26,10 @@ const escapeAttr = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quo
 html = html.replace(/<link rel="canonical"[^>]*>/, `<link rel="canonical" href="${escapeAttr(base.href)}">`);
 html = html.replace(/<meta property="og:image"[^>]*>/,
   `<meta property="og:url" content="${escapeAttr(base.href)}">\n<meta property="og:image" content="${escapeAttr(new URL('assets/img/portrait-hero.webp', base).href)}">`);
-// Content hashes prevent stale CSS/JS after a Pages deployment.
-for (const asset of new Set(assets.filter(path => /\.(css|js)$/.test(path)))) {
+// Content hashes prevent stale CSS, JS and images after a Pages deployment (an image
+// replaced under the same name otherwise keeps showing the old version from cache).
+// Fonts are left alone: they are also requested from CSS, where no hash is added.
+for (const asset of new Set(assets.filter(path => /\.(css|js|webp|png|jpe?g|svg)$/.test(path)))) {
   const hash = createHash('sha256').update(await readFile(resolve(root, asset))).digest('hex').slice(0, 12);
   html = html.replaceAll('"' + asset + '"', '"' + asset + '?v=' + hash + '"');
 }
