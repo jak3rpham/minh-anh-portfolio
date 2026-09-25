@@ -311,12 +311,14 @@ h1, h2, h3 {
   flex-wrap: wrap;
 }
 .toolrow img {
-  height: clamp(52px, 5vw, 64px);
-  width: auto;
+  /* All three marks are equal discs, so one size makes them read as a set. */
+  width: clamp(54px, 5vw, 64px);
+  height: clamp(54px, 5vw, 64px);
+  border-radius: 50%;
   filter: drop-shadow(0 6px 10px rgb(40 30 20 / 0.16));
   transition: scale 0.3s var(--ease), rotate 0.3s var(--ease);
 }
-.toolrow img:nth-child(1) { rotate: -5deg; }
-.toolrow img:nth-child(2) { rotate: 4deg; }
+.toolrow img:nth-child(1) { rotate: -4deg; }
+.toolrow img:nth-child(2) { rotate: 3deg; }
 .toolrow img:nth-child(3) { rotate: -3deg; }
 .toolrow img:hover { scale: 1.08; rotate: 0deg; }
